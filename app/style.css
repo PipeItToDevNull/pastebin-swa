@@ -25,10 +25,10 @@ body {
 }
 
 body {
-    background-color: var(--b3);
     color: var(--w3);
 }
 #container {
+    background-color: var(--b3);
     margin-left: 10em;
     margin-right: 10em;
 }
