@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PasteBin Clone</title>
+</head>
+<body>
+    <h1>PasteBin Clone</h1>
+    <pre id="pasteContent"></pre>
+
+    <script>
+        window.onload = async function() {
+            const uuid = window.location.pathname.split('/')[1];
+            const response = await fetch(`/api/get/${uuid}`);
+            if (response.ok) {
+                const text = await response.text();
+                document.getElementById('pasteContent').textContent = text;
+            } else {
+                document.getElementById('pasteContent').textContent = 'An error occurred.';
+            }
+        };
+    </script>
+</body>
+</html>
