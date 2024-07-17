@@ -8,7 +8,7 @@
       "methods": [
         "get"
       ],
-      "route": "get/{UUID}"
+      "route": "get"
     },
     {
       "type": "http",
