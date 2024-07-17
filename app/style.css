@@ -1,0 +1,24 @@
+
+
+body {
+    --color-red: #bf616a;
+    --color-orange: #d08770;
+    --color-yellow-light: #ebcb8b;
+    --color-yellow-dark: #e4b860;
+    --color-green: #a3be8c;
+    --color-purple: #b48ead;
+    --color-sea-green: #8fbcbb;
+    --color-cyan: #88c0d0;
+    --color-frost: #81a1c1;
+    --color-blue: #5e81ac;
+    --color-salmon: #FC6E68;
+
+    --b0: #2E3440;
+    --b1: #3B4252;
+    --b2: #434C5E;
+    --b3: #4C566A;
+}
+
+body {
+    background-color: var(--b3);
+}
