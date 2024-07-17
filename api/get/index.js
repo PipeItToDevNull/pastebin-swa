@@ -1,4 +1,4 @@
-const azure = require('azure-storage');
+const { BlobServiceClient } = require('@azure/storage-blob');
 const blobServiceString = BlobServiceClient.fromConnectionString(process.env.AzureBlobConnectionString);
 
 module.exports = function (context, req) {
