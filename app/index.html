@@ -16,7 +16,7 @@
                 document.getElementById('pasteContent').textContent = text;
             } else {
                 const errorMessage = await response.text();
-                document.getElementById('pasteContent').textContent = `API Error ${response.status}: ${errorMessage}`;
+                document.getElementById('pasteContent').textContent = `API Error ${response.status}:` errorMessage;
             }
         };
     </script>
