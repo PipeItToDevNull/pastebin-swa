@@ -17,8 +17,22 @@ body {
     --b1: #3B4252;
     --b2: #434C5E;
     --b3: #4C566A;
+
+    --w0: #D8DEE9;
+    --w1: #E5E9F0;
+    --w2: #ECEFF4;
+    --w3: #f5f7f9;
 }
 
 body {
     background-color: var(--b3);
+    color: var(--w3);
+}
+container {
+    margin-left: 10em;
+    margin-right: 10em;
+}
+blobContent {
+    padding: 1em;
+    border-radius: .5em;
 }
