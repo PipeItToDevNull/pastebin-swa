@@ -6,8 +6,9 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get/{UUID}"
-      ]
+        "get"
+      ],
+      "route": "get/{UUID}"
     },
     {
       "type": "http",
