@@ -4,7 +4,7 @@ const { BlobServiceClient } = require('@azure/storage-blob');
 module.exports = async function (context, req) {
     const uuid = req.params.uuid; // Get the UUID from the request
 
-    const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AzureWebJobsStorage);
+    const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AzureBlobConnectionString);
     const containerClient = blobServiceClient.getContainerClient('linx-container'); // define the azure storage container to be used
     const blockBlobClient = containerClient.getBlockBlobClient(uuid);
 
