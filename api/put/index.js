@@ -7,7 +7,7 @@ module.exports = async function (context, req) {
     const blobUUID = uuid.v4(); // generate a UUID into a variable
     const blockBlobClient = containerClient.getBlockBlobClient(blobUUID);
     const text = req.body;
-    const site = "https://paste.dev0.sh";
+    const site = "https://victorious-wave-0a02a5a0f.5.azurestaticapps.net";
 
     try {
         await blockBlobClient.upload(text, text.length);
