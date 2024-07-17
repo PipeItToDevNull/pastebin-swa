@@ -15,7 +15,7 @@
                 const text = await response.text();
                 document.getElementById('pasteContent').textContent = text;
             } else {
-                document.getElementById('pasteContent').textContent = 'An error occurred.';
+                document.getElementById('pasteContent').textContent = `Error ${response.status}: ${response.statusText}`;
             }
         };
     </script>
