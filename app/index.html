@@ -9,13 +9,13 @@
 
     <script>
         window.onload = async function() {
+            console.log("Pathname: ", window.location.pathname); // log the pathname to the console for debug
             const uuid = window.location.pathname.split('/')[1];
             const response = await fetch(`/api/get/${uuid}`);
             if (response.ok) {
                 const text = await response.text();
                 document.getElementById('pasteContent').textContent = text;
             } else {
-                console.log(response);
                 const errorMessage = await response.text();
                 document.getElementById('pasteContent').textContent = `API Error ${response.status}: ${errorMessage}`;
             }
