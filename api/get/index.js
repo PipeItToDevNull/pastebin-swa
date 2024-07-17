@@ -9,9 +9,14 @@ module.exports = async function (context, req) {
     try {
         const downloadBlockBlobResponse = await blockBlobClient.download(0);
         const blobContent = (await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)).toString();
-        context.res = { body: blobContent };
+        context.res = { 
+            body: blobContent 
+        };
     } catch (err) {
-        context.res = { status: 500, body: `An error occurred downloading the blob: ${err.message}` };
+        context.res = { 
+            status: 500, 
+            body: `An error occurred downloading the blob: ${err.message}`
+        };
     }
 }
 
