@@ -28,11 +28,11 @@ body {
     background-color: var(--b3);
     color: var(--w3);
 }
-container {
+#container {
     margin-left: 10em;
     margin-right: 10em;
 }
-blobContent {
+#blobContent {
     padding: 1em;
     border-radius: .5em;
 }
