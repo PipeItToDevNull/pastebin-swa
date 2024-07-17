@@ -1,38 +1,33 @@
-const { BlobServiceClient } = require('@azure/storage-blob');
+const azure = require('azure-storage');
+const blobServiceString = BlobServiceClient.fromConnectionString(process.env.AzureBlobConnectionString);
 
+module.exports = function (context, req) {
+    context.log('JavaScript HTTP trigger function processed a request.');
 
-module.exports = async function (context, req) {
-    const uuid = req.params.uuid; // Get the UUID from the request
+    if (req.query.uuid || (req.body && req.body.uuid)) {
+        const blobUUID = req.query.uuid || req.body.uuid;
 
-    const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AzureBlobConnectionString);
-    const containerClient = blobServiceClient.getContainerClient('linx-container'); // define the azure storage container to be used
-    const blockBlobClient = containerClient.getBlockBlobClient(uuid);
-
-    try {
-        const downloadBlockBlobResponse = await blockBlobClient.download(0);
-        const blobContent = (await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)).toString();
-
-        context.res = {
-            body: blobContent
-        };
-    } catch (err) {
-        context.res = {
-            status: 500,
-            body: `An error occurred downloading the blob: ${err.message}`
-        };
+        blobServiceString.getBlobToText('linx-container', blobUUID, function(error, blobContent, blob) {
+            if (!error) {
+                context.res = {
+                    // status: 200, /* Defaults to 200 */
+                    body: blobContent
+                };
+            }
+            else {
+                context.res = {
+                    status: 500,
+                    body: "Error fetching blob: " + error
+                };
+            }
+            context.done();
+        });
     }
-}
-
-// Helper function to stream the blob to a Buffer
-async function streamToBuffer(readableStream) {
-    return new Promise((resolve, reject) => {
-        const chunks = [];
-        readableStream.on('data', (data) => {
-            chunks.push(data instanceof Buffer ? data : Buffer.from(data));
-        });
-        readableStream.on('end', () => {
-            resolve(Buffer.concat(chunks));
-        });
-        readableStream.on('error', reject);
-    });
-}
+    else {
+        context.res = {
+            status: 400,
+            body: "Please pass a uuid on the query string or in the request body"
+        };
+        context.done();
+    }
+};
