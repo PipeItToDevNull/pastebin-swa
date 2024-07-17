@@ -30,10 +30,11 @@ body {
 }
 #container {
     background-color: var(--b3);
-    margin-left: 10em;
-    margin-right: 10em;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 #blobContent {
-    padding: 1em;
+    background-color: var(--b3);
     border-radius: .5em;
+    padding: 1em;
 }
