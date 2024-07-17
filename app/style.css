@@ -25,6 +25,7 @@ body {
 }
 
 body {
+    background-color: var(--b0);
     color: var(--w3);
 }
 #container {
