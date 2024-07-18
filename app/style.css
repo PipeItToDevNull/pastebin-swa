@@ -43,3 +43,16 @@ body {
     padding: 1em;
     font-size: .75em;
 }
+
+a:link {
+  color: var(--color-blue);
+}
+a:visited {
+  color: var(--color-frost);
+}
+a:hover {
+  color: var(--color-cyan);
+}
+a:active {
+  color: var(--color-sea-green);
+}
