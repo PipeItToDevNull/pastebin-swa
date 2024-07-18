@@ -4,8 +4,11 @@ window.onload = async function() {
     console.log("UUID: ", uuid);
     const response = await fetch(`/api/get/?uuid=${uuid}`);
     console.log(response);
+
+    const contentType = response.headers.get("content-type");
+    console.log(contentType)
+
     if (response.ok) {
-        console.log(contentType)
         const text = await response.text();
         document.getElementById('blobContent').textContent = text;
     } else {
