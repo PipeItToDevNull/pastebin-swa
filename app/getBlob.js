@@ -5,6 +5,7 @@ window.onload = async function() {
     const response = await fetch(`/api/get/?uuid=${uuid}`);
     console.log(response);
     if (response.ok) {
+        console.log(contentType)
         const text = await response.text();
         document.getElementById('blobContent').textContent = text;
     } else {
