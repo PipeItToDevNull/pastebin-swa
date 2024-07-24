@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>pastebin-swa</title>
-    <link rel="stylesheet" href="style.css">
+    <div id="header" w3-include-html="header.html"></div>
 </head>
 <body>
     <div id="container">
@@ -13,9 +12,10 @@
 
         <script src="getBlob.js"></script>
 
-        <div id="footer">
-            All pastes are deleted after 24 hours
-        </div>
+        <div id="footer" w3-include-html="footer.html"></div>
     </div>
 </body>
 </html>
+
+<script src="include.js">includeHTML();</script>
+<script>includeHTML();</script>
