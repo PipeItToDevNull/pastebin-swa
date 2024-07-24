@@ -15,7 +15,7 @@ async function streamToBuffer(readableStream) {
 
 module.exports = async function (context, req) {
     const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AzureBlobConnectionString);
-    const blobUUID = req.query.uuid
+    const blobUUID = req.query.uuid;
 
     if (!blobUUID) {
         context.res = {
@@ -25,14 +25,19 @@ module.exports = async function (context, req) {
         return;
     }
 
-    const containerClient = blobServiceClient.getContainerClient('linx-container'); //define blob container name
+    const containerClient = blobServiceClient.getContainerClient('linx-container'); // define blob container name
     const blockBlobClient = containerClient.getBlockBlobClient(blobUUID);
 
     try {
         const downloadBlockBlobResponse = await blockBlobClient.download(0);
         const blobContent = (await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)).toString();
+        const mimetype = downloadBlockBlobResponse.contentType; // get the mimetype from the response headers
+
         context.res = { 
-            body: blobContent 
+            body: blobContent,
+            headers: {
+                'Content-Type': mimetype // return the mimetype in the response headers
+            }
         };
     } catch (err) {
         context.res = { 
@@ -40,5 +45,4 @@ module.exports = async function (context, req) {
             body: `An error occurred downloading the blob: ${err.message}`
         };
     }
-
 }
