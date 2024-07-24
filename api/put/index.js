@@ -7,10 +7,13 @@ module.exports = async function (context, req) {
     const blobUUID = uuid.v4(); // generate a UUID into a variable
     const blockBlobClient = containerClient.getBlockBlobClient(blobUUID);
     const text = req.body;
+    const mimetype = req.headers['content-type'] || 'text/plain'; // get the mimetype from the request headers or default to 'text/plain'
     const site = "https://victorious-wave-0a02a5a0f.5.azurestaticapps.net";
 
     try {
-        await blockBlobClient.upload(text, text.length);
+        await blockBlobClient.upload(text, text.length, {
+            blobHTTPHeaders: { blobContentType: mimetype } // set the content type
+        });
         context.res = { body: `${site}/${blobUUID}` };
     } catch (err) {
         context.res = { status: 500, body: `An error occurred uploading the text: ${err.message}` };
