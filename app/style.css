@@ -66,6 +66,9 @@ ul {
   list-style-type: none;
   padding: 0;
 }
+ul li {
+  display: inherit !important;
+}
 /* make non important once fixes implemented */
 ul li:nth-child(2n) {
   background-color: var(--color-frost) !important;
