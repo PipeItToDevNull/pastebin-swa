@@ -65,6 +65,7 @@ ul {
   white-space: wrap;
   list-style-type: none;
   padding: 0;
+  display: inherit !important;
 }
 ul li {
   display: inherit !important;
