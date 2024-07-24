@@ -9,7 +9,7 @@ window.onload = async function() {
     console.log("Content Type: ", contentType);
 
     if (response.ok) {
-        if (contentType === 'text/html') {
+        if (contentType === 'text/html; charset=utf-8') {
             console.log("Rendering: HTML");
             const html = await response.text();
             document.getElementById('blobContent').innerHTML = html;
