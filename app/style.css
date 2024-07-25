@@ -56,3 +56,21 @@ a:hover {
 a:active {
   color: var(--color-sea-green);
 }
+
+/*
+  These are fixes for .factoid all, some will be perm and 
+  some should be incorporated into the generated output 
+*/
+ul {
+  white-space: wrap;
+  list-style-type: none;
+  padding: 0;
+  display: inherit !important;
+}
+ul li {
+  display: inherit !important;
+}
+/* make non important once fixes implemented */
+ul li:nth-child(2n) {
+  background-color: var(--color-frost) !important;
+}
