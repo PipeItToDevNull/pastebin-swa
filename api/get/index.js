@@ -17,10 +17,13 @@ module.exports = async function (context, req) {
     const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AzureBlobConnectionString);
     const blobUUID = req.query.uuid;
 
-    if (!blobUUID) {
+    // Regular expression to validate UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+    if (!blobUUID || !uuidRegex.test(blobUUID)) {
         context.res = {
             status: 400, // Bad Request
-            body: "Missing uuid in query"
+            body: "Invalid or missing uuid in query"
         };
         return;
     }
