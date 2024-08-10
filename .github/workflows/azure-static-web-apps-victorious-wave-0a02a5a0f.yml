@@ -14,6 +14,8 @@ jobs:
   build_and_deploy_job:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -32,14 +34,6 @@ jobs:
           api_location: "./api" # Api source code path - optional
           output_location: "/dist" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-      - name: Post Preview URL
-        if: github.event_name == 'pull_request'
-        run: |
-          PR_NUMBER=$(echo ${{ github.event.number }})
-          PREVIEW_URL="https://${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_HAPPY_MUSHROOM_0564BDF0F }}.azurestaticapps.net"
-          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -d "{\"body\": \"Preview URL: $PREVIEW_URL\"}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
 
   close_pr:
     if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' 
