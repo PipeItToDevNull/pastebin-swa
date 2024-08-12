@@ -11,9 +11,9 @@
         "repositoryUrl": "[parameters('repositoryUrl')]",
         "branch": "[parameters('branch')]",
         "buildProperties": {
-          "appLocation": "app",
-          "apiLocation": "api",
-          "outputLocation": "build"
+          "appLocation": "[parameters('appLocation')]",
+          "apiLocation": "[parameters('apiLocation')]",
+          "outputLocation": "[parameters('outputLocation')]"
         }
       },
       "sku": {
@@ -92,6 +92,24 @@
       "type": "string",
       "metadata": {
         "description": "Branch to deploy from"
+      }
+    },
+    "appLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Location of the app"
+      }
+    },
+    "apiLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Location of the API"
+      }
+    },
+    "outputLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Location of the output"
       }
     },
     "storageAccountName": {

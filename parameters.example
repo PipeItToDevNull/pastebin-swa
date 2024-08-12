@@ -3,19 +3,28 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "staticWebAppName": {
-      "value": "YourStaticWebAppName"
+      "value": "<your-static-web-app-name>"
     },
     "repositoryUrl": {
-      "value": "YourRepositoryUrl"
+      "value": "<your-repository-url>"
     },
     "branch": {
-      "value": "main"
+      "value": "<your-branch>"
+    },
+    "appLocation": {
+      "value": "<your-app-location>"
+    },
+    "apiLocation": {
+      "value": "<your-api-location>"
+    },
+    "outputLocation": {
+      "value": "<your-output-location>"
     },
     "storageAccountName": {
-      "value": "YourStorageAccountName"
+      "value": "<yourstorageaccountname>"
     },
     "containerName": {
-        "value": "YourStorageContainerName"
+      "value": "<your-container-name>"
     }
   }
 }
