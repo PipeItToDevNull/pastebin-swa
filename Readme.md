@@ -9,6 +9,7 @@ The upload function listens on `/api/upload` for PUT or POST requests. The uploa
 The get function listens on `/api/get` and is only intended to be used by the SWA to request a blob based on the UUID in the URL.
 
 ## Deploying the ARM template
+Parameters for the ARM `template.json` are defined in `parameters.json`.
 
 ```bash
 az login
