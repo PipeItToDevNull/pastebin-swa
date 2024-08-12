@@ -7,3 +7,13 @@ The upload function listens on `/api/upload` for PUT or POST requests. The uploa
 
 ### Get
 The get function listens on `/api/get` and is only intended to be used by the SWA to request a blob based on the UUID in the URL.
+
+## Deploying the ARM template
+
+```bash
+az login
+az group create --name ExampleGroup --location eastus
+az deployment group create --name ExampleDeployment --resource-group ExampleGroup --template-file ./template.json --parameters ./parameters.json
+```
+
+Once deployed, you will be able to point the generated SWA at your repository and it will create the required GHA to enable CICD on your project.
