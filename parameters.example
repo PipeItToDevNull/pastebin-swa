@@ -9,7 +9,7 @@
       "value": "YourRepositoryUrl"
     },
     "branch": {
-      "value": "YourBranch"
+      "value": "main"
     },
     "storageAccountName": {
       "value": "YourStorageAccountName"
