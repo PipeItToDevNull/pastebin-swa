@@ -16,4 +16,4 @@ az group create --name ExampleGroup --location eastus
 az deployment group create --name ExampleDeployment --resource-group ExampleGroup --template-file ./template.json --parameters ./parameters.json
 ```
 
-Once deployed, you will be able to point the generated SWA at your repository and it will create the required GHA to enable CICD on your project.
+Once deployed, the SWA will now be pointed at your repo and is waiting for a build to be submitted. You must create and configure your own GithubAction for this portion of the deployment.
