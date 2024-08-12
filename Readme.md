@@ -7,3 +7,13 @@ The upload function listens on `/api/upload` for PUT or POST requests. The uploa
 
 ### Get
 The get function listens on `/api/get` and is only intended to be used by the SWA to request a blob based on the UUID in the URL.
+
+## Deploying the ARM template
+
+```bash
+az login
+az group create --name ExampleGroup --location eastus
+az deployment group create --name ExampleDeployment --resource-group ExampleGroup --template-file ./template.json --parameters ./parameters.json
+```
+
+Once deployed, the SWA will now be pointed at your repo and is waiting for a build to be submitted. You must create and configure your own GithubAction for this portion of the deployment.
