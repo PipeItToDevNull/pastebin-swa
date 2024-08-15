@@ -4,14 +4,13 @@
     <div id="header" w3-include-html="header.html"></div>
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <div id="container">
         <div id="header">
             <h1>pastebin-swa</h1>
         </div>
         <pre id="blobContent">Loading...</pre>
 
-        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-        <script>console.log(typeof marked); // Should log 'function'</script>
         <script src="getBlob.js"></script>
 
         <div id="footer" w3-include-html="footer.html"></div>
