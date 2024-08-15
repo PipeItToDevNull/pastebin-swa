@@ -12,10 +12,10 @@ window.onload = async function() {
         const text = await response.text();
         if (contentType === 'text/html; charset=utf-8') {
             console.log("Rendering: HTML");
-            document.getElementById('blobContent').innerHTML = txt;
+            document.getElementById('blobContent').innerHTML = text;
         } else if (contentType === 'text/markdown; charset=utf-8') {
             console.log("Rendering: Markdown");
-            const html = marked(text);
+            const html = marked.parse(text);
             document.getElementById('blobContent').innerHTML = html;
         } else {
             console.log("Rendering: Plain text");
