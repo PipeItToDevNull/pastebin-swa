@@ -9,13 +9,16 @@ window.onload = async function() {
     console.log("Content Type: ", contentType);
 
     if (response.ok) {
+        const text = await response.text();
         if (contentType === 'text/html; charset=utf-8') {
             console.log("Rendering: HTML");
-            const html = await response.text();
+            document.getElementById('blobContent').innerHTML = text;
+        } else if (contentType === 'text/markdown; charset=utf-8') {
+            console.log("Rendering: Markdown");
+            const html = marked.parse(text);
             document.getElementById('blobContent').innerHTML = html;
         } else {
             console.log("Rendering: Plain text");
-            const text = await response.text();
             document.getElementById('blobContent').textContent = text;
         }
     } else {
