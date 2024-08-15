@@ -1,2 +1,14 @@
 All pastes are deleted after 24 hours<br>
-Find the source for this project <a href="https://github.com/PipeItToDevNull/pastebin-swa">on GitHub</a>
+Find the source for this project <a id="github-link" href="#">on GitHub</a></p>
+<script>
+    async function repoURL() {
+        const response = await fetch('env.json');
+        const data = await response.json();
+        return data.githubURL;
+    }
+
+    // Set the href attribute using the returned string
+    repoURL().then(url => {
+        document.getElementById('github-link').href = url;
+    });
+</script>
