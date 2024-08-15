@@ -2,22 +2,13 @@ All pastes are deleted after 24 hours<br>
 <a id="github-link" href="#">View the source code for this project!</a></p>
 <script>
     async function repoURL() {
-        try {
-        const response = await fetch('env.json');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        return data.REPO_URL;
-        } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-        }
+      const response = await fetch('env.json');
+      const data = await response.json();
+      return data.REPO_URL;
     }
 
     // Set the href attribute using the returned string
     repoURL().then(url => {
-        if (url) {
-        document.getElementById('github-link').href = url;
-        }
+      document.getElementById('github-link').href = url;
     });
 </script>
