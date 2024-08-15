@@ -4,7 +4,7 @@ Find the source for this project <a id="github-link" href="#">on GitHub</a></p>
     async function repoURL() {
         const response = await fetch('env.json');
         const data = await response.json();
-        return data.githubURL;
+        return data.REPO_URL;
     }
 
     // Set the href attribute using the returned string
