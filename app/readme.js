@@ -1,9 +1,8 @@
+// Pull the README_URL variable from env.json
 fetch('env.json')
 .then(response => response.json())
 .then(data => {
     const readmeUrl = data.README_URL;
-
-    // Fetch the README.md file from the URL
     return fetch(readmeUrl);
 })
 .then(response => response.text())
