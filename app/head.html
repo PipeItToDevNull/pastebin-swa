@@ -1,2 +1,11 @@
-<title>pastebin-swa</title>
+<title id="site_title">pastebin-swa</title>
 <link rel="stylesheet" href="style.css">
+
+<script>
+    async function loadSiteName() {
+        const response = await fetch('env.json');
+        const data = await response.json();
+        document.getElementById('site_title').textContent = data.SITE_NAME;
+    }
+    loadSiteName();
+</script>
