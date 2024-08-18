@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <div id="header" w3-include-html="header.html"></div>
+    <script src="siteName.js"></script>
+    <script src="include.js"></script>
 </head>
 <body>
     <div id="container">
-        <div id="header">
-            <h1 id="site-name">SITE_NAME variable not set</h1>
-        </div>
-    <p>This is the homepage</p>
-    <div id="footer" w3-include-html="footer.html"></div>
+        <div id="header" w3-include-html="header.html"></div>
+        <p>This is the homepage</p>
+        <div id="footer" w3-include-html="footer.html"></div>
+    </div>
+
+    <script>
+        includeHTML();
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSiteNameAndSet();
+        });
+    </script>
 </body>
 </html>
-
-<script src="siteName.js"></script>
-<script src="include.js">includeHTML();</script>
-<script>includeHTML();</script>
