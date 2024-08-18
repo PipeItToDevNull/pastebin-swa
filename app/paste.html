@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="siteName.js"></script>
+    <script src="include.js">includeHTML();</script>
     <div id="header" w3-include-html="header.html"></div>
 </head>
 <body>
@@ -15,9 +17,11 @@
 
         <div id="footer" w3-include-html="footer.html"></div>
     </div>
+    <script>
+        includeHTML();
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSiteNameAndSet();
+        });
+    </script>
 </body>
 </html>
-
-<script src="siteName.js"></script>
-<script src="include.js">includeHTML();</script>
-<script>includeHTML();</script>
