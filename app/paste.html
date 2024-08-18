@@ -6,7 +6,7 @@
 <body>
     <div id="container">
         <div id="header">
-            <h1>pastebin-swa</h1>
+            <h1 id="site_name">pastebin-swa</h1>
         </div>
         <div id="blobContent">Loading...</div>
 
@@ -15,6 +15,15 @@
 
         <div id="footer" w3-include-html="footer.html"></div>
     </div>
+    <script>
+        // Load the pages H1 from env.json
+        async function loadTitle() {
+            const response = await fetch('env.json');
+            const data = await response.json();
+            document.getElementById('site_name').textContent = data.SITE_NAME;
+        }
+        loadTitle();
+    </script>
 </body>
 </html>
 
