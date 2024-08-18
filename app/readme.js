@@ -10,5 +10,5 @@ fetch('https://raw.githubusercontent.com/PipeItToDevNull/pastebin-swa/main/Readm
     const modifiedText = lines.join('\n');
     
     // Sanitize and render the markdown content
-    document.getElementById('content').innerHTML = DOMPurify.sanitize(marked.parse(modifiedText));
+    document.getElementById('readme').innerHTML = DOMPurify.sanitize(marked.parse(modifiedText));
 });
