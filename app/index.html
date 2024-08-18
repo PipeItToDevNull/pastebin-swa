@@ -6,7 +6,7 @@
 <body>
     <div id="container">
         <div id="header">
-            <h1>pastebin-swa</h1>
+            <h1 id="title">pastebin-swa</h1>
         </div>
         <div id="readme">Loading...</div>
 
@@ -16,6 +16,19 @@
 
         <div id="footer" w3-include-html="footer.html"></div>
     </div>
+    <script>
+        async function loadTitle() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                document.getElementById('title').textContent = data.title;
+            } catch (error) {
+                console.error('Error loading title:', error);
+            }
+        }
+
+        loadTitle();
+    </script>
 </body>
 </html>
 
