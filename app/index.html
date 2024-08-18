@@ -6,7 +6,7 @@
 <body>
     <div id="container">
         <div id="header">
-            <h1 id="title">pastebin-swa</h1>
+            <h1 id="site_name">pastebin-swa</h1>
         </div>
         <div id="readme">Loading...</div>
 
@@ -21,7 +21,7 @@
         async function loadTitle() {
             const response = await fetch('env.json');
             const data = await response.json();
-            document.getElementById('title').textContent = data.SITE_NAME;
+            document.getElementById('site_name').textContent = data.SITE_NAME;
         }
         loadTitle();
     </script>
