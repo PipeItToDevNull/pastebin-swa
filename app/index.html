@@ -17,15 +17,11 @@
         <div id="footer" w3-include-html="footer.html"></div>
     </div>
     <script>
-            // Load the pages H1 from env.json
-            async function loadTitle() {
-            try {
-                const response = await fetch('env.json');
-                const data = await response.json();
-                document.getElementById('title').textContent = data.SITE_NAME;
-            } catch (error) {
-                console.error('Error loading title:', error);
-            }
+        // Load the pages H1 from env.json
+        async function loadTitle() {
+            const response = await fetch('env.json');
+            const data = await response.json();
+            document.getElementById('title').textContent = data.SITE_NAME;
         }
         loadTitle();
     </script>
