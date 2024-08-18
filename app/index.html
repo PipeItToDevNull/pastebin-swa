@@ -16,19 +16,7 @@
 
         <div id="footer" w3-include-html="footer.html"></div>
     </div>
-    <script>
-        async function loadTitle() {
-            try {
-                const response = await fetch('data.json');
-                const data = await response.json();
-                document.getElementById('title').textContent = data.title;
-            } catch (error) {
-                console.error('Error loading title:', error);
-            }
-        }
-
-        loadTitle();
-    </script>
+    <script> src="title.js"</script>
 </body>
 </html>
 
