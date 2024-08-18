@@ -4,17 +4,9 @@ Find the source for this project <a id="repo_url" href="#">on GitHub</a>
 <script>
     // Fetch the URL from env.json
     async function loadRepoUrl() {
-        try {
-            const response = await fetch('env.json');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            console.log('Fetched URL:', data.REPO_URL); // Debugging line
-            document.getElementById('repo_url').href = data.REPO_URL;
-        } catch (error) {
-            console.error('Error loading REPO_URL:', error);
-        }
+        const response = await fetch('env.json');
+        const data = await response.json();
+        document.getElementById('repo_url').href = data.REPO_URL;
     }
     loadRepoUrl();
 </script>
