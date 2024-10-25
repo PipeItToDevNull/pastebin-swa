@@ -1,4 +1,4 @@
-# Pastebin-SWA
+# KittyPost
 An Azure Static Web App with API functions for uploading and returning plain text markdown files to be displayed on the site dynamically.
 
 ## APIs
@@ -29,3 +29,6 @@ az deployment group create --name ExampleDeployment --resource-group ExampleGrou
 ```
 
 Once deployed, the SWA will now be pointed at your repo and is waiting for a build to be submitted. You must create and configure your own GithubAction for this portion of the deployment.
+
+## Technical notes
+- `staticwebapp.config.json` is used to route all URLs back to index.html, this allows the React router to hand off UUID URLs to the API.
