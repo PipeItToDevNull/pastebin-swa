@@ -1,4 +1,4 @@
-# Pastebin-SWA
+# KittyPost
 An Azure Static Web App with API functions for uploading and returning plain text markdown files to be displayed on the site dynamically.
 
 ## APIs
