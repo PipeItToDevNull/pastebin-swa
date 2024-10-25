@@ -22,7 +22,7 @@ function App() {
                     <h1 id="site_name">{SITE_NAME}</h1>
                 </div>
                 <Routes>
-                    <Route path="/paste/:uuid" element={<Paste />} />
+                    <Route path="/:uuid" element={<Paste />} />
                     <Route path="/" element={<div id="usage">Loading...</div>} />
                 </Routes>
                 <Footer />
