@@ -3,11 +3,11 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main
+      - v2-react
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - v2-react
   workflow_dispatch:
 
 jobs:
