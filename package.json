@@ -1,0 +1,23 @@
+{
+  "name": "paste-swa",
+  "version": "1.0.0",
+  "description": "An Azure Static Web App with API functions for uploading and returning plain text markdown files to be displayed on the site dynamically.",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dompurify": "^3.1.7",
+    "marked": "^14.1.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^6.27.0"
+  }
+}
