@@ -1,7 +1,8 @@
 const axios = require('axios');
 
 module.exports = async function (context, req) {
-    const baseUrl = `${req.headers['x-forwarded-proto']}://${req.headers.host}/api`;
+    const originalUrl = req.originalUrl;
+    const baseUrl = originalUrl.substring(0, originalUrl.indexOf('/api')) + '/api';
 
     const uploadUrl = `${baseUrl}/upload`;
     const getUrl = `${baseUrl}/get/?uuid=00000000-0000-0000-0000-000000000000`;
