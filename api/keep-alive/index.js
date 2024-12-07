@@ -30,6 +30,7 @@ module.exports = async function (context, req) {
     context.res = {
         status: 200,
         body: {
+            message: "Keep-alive endpoint is working!",
             uploadStatus,
             getStatus
         }
