@@ -4,7 +4,7 @@ module.exports = async function (context, req) {
     const baseUrl = `${req.headers['x-forwarded-proto']}://${req.headers.host}/api`;
 
     const uploadUrl = `${baseUrl}/upload`;
-    const getUrl = `${baseUrl}/get?uuid=00000000-0000-0000-0000-000000000000`;
+    const getUrl = `${baseUrl}/get/?uuid=00000000-0000-0000-0000-000000000000`;
 
     let uploadStatus = { lastSuccess: null, lastError: null, result: null };
     let getStatus = { lastSuccess: null, lastError: null, result: null };
