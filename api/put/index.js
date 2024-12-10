@@ -4,7 +4,7 @@ const blobServiceString = BlobServiceClient.fromConnectionString(process.env.Azu
 
 module.exports = async function (context, req) {
     const containerClient = blobServiceString.getContainerClient('linx-container'); // define the azure storage container to be used
-    const blobUUID = uuid.v4(); // generate a UUID into a variable
+    const blobUUID = uuidv4().split('-')[0]; // Get the first part of the UUID
     const blockBlobClient = containerClient.getBlockBlobClient(blobUUID);
     const text = req.body;
     const mimetype = req.headers['content-type'] || 'text/plain'; // get the mimetype from the request headers or default to 'text/plain'
