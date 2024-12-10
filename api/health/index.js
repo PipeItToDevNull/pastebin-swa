@@ -3,7 +3,7 @@ const axios = require('axios');
 module.exports = async function (context) {
     const baseUrl = process.env.REACT_APP_URL;
     const uploadEndpoint = `${baseUrl}/api/upload`;
-    const getEndpoint = `${baseUrl}/api/get/?uuid=00000000`;
+    const getEndpoint = "https://catfact.ninja/fact";
 
     const uploadStatus = { lastSuccess: null, lastError: null, result: null, url: uploadEndpoint };
     const getStatus = { lastSuccess: null, lastError: null, result: null, url: getEndpoint };
