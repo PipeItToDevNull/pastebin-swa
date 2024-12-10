@@ -35,4 +35,5 @@ module.exports = async function (context) {
             getStatus
         }
     };
+    context.log('Health check completed.');
 };
