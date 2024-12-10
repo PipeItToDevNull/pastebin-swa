@@ -18,7 +18,7 @@ module.exports = async function (context, req) {
     const blobUUID = req.query.uuid;
 
     // Regular expression to validate UUID
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const uuidRegex = /^[0-9a-f]{8}$/i;
 
     if (!blobUUID || !uuidRegex.test(blobUUID)) {
         context.res = {
