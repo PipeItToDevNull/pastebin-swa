@@ -6,8 +6,8 @@ module.exports = async function (context) {
     const uploadUrl = `${baseUrl}/api/upload`;
     const getUrl = `${baseUrl}/api/get/?uuid=00000000`;
 
-    let uploadStatus = { lastSuccess: null, lastError: null, result: null, url: uploadUrl };
-    let getStatus = { lastSuccess: null, lastError: null, result: null, url: getUrl };
+    const uploadStatus = { lastSuccess: null, lastError: null, result: null, url: uploadUrl };
+    const getStatus = { lastSuccess: null, lastError: null, result: null, url: getUrl };
 
     try {
         const uploadResponse = await axios.put(uploadUrl, {});
