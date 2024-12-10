@@ -1,12 +1,11 @@
 const axios = require('axios');
 
 module.exports = async function (context) {
-    // Derive the URL we are gonna get against
-    const uploadEndpoint = `/api/upload`;
-    const getEndpoint = `/api/get/?uuid=00000000`;
+    const uploadEndpoint = "/api/upload";
+    const getEndpoint = "/api/get/?uuid=00000000";
 
-    const uploadStatus = { lastSuccess: null, lastError: null, result: null, url: uploadUrl };
-    const getStatus = { lastSuccess: null, lastError: null, result: null, url: getUrl };
+    const uploadStatus = { lastSuccess: null, lastError: null, result: null, url: uploadEndpoint };
+    const getStatus = { lastSuccess: null, lastError: null, result: null, url: getEndpoint };
 
     try {
         const uploadResponse = await axios.put(uploadEndpoint, {});
