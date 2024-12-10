@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-module.exports = async function (context, req) {
+module.exports = async function (context) {
     // Derive the URL we are gonna get against
     const baseUrl = process.env.REACT_APP_URL;
     const uploadUrl = `${baseUrl}/api/upload`;
