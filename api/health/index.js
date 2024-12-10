@@ -1,11 +1,10 @@
 const axios = require('axios');
 
 module.exports = async function (context, req) {
-    const originalUrl = req.originalUrl;
-    const baseUrl = originalUrl.substring(0, originalUrl.indexOf('/api')) + '/api';
-
-    const uploadUrl = `${baseUrl}/upload`;
-    const getUrl = `${baseUrl}/get/?uuid=00000000-0000-0000-0000-000000000000`;
+    // Derive the URL we are gonna get against
+    const baseUrl = process.env.REACT_APP_URL;
+    const uploadUrl = `${baseUrl}/api/upload`;
+    const getUrl = `${baseUrl}/api/get/?uuid=00000000`;
 
     let uploadStatus = { lastSuccess: null, lastError: null, result: null, url: uploadUrl };
     let getStatus = { lastSuccess: null, lastError: null, result: null, url: getUrl };
