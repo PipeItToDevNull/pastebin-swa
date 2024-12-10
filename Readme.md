@@ -1,6 +1,11 @@
 # KittyPost
 An Azure Static Web App with API functions for uploading and returning plain text markdown files to be displayed on the site dynamically.
 
+## Variables
+`.env.example` is used to handle the SWA frontend. These entries should be placed into your Github repo Secrets & Variables area as Variables
+
+`REACT_APP_URL` and `AzureBlobConnectionString` should be entered as variables in your Azure SWA dashboard.
+
 ## APIs
 ### Put
 The upload function listens on `/api/upload` for PUT or POST requests. The upload is stored in Azure blob storage and a UUID appended to a URL is returned to the client in the format `https://contoso.com/UUID`

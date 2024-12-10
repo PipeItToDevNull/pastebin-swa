@@ -8,7 +8,7 @@ module.exports = async function (context, req) {
     const blockBlobClient = containerClient.getBlockBlobClient(blobUUID);
     const text = req.body;
     const mimetype = req.headers['content-type'] || 'text/plain'; // get the mimetype from the request headers or default to 'text/plain'
-    const site = "https://victorious-wave-0a02a5a0f.5.azurestaticapps.net";
+    const site = process.env.REACT_APP_URL;
 
     try {
         await blockBlobClient.upload(text, text.length, {
