@@ -10,6 +10,7 @@ module.exports = async function (context) {
     const uploadStatus = { lastSuccess: null, lastError: null, result: null, url: uploadEndpoint };
     const getStatus = { lastSuccess: null, lastError: null, result: null, url: getEndpoint };
 
+    // Set exepcted error messages
     const validUpload = "An error occurred uploading the text: contentLength cannot be null or undefined."
     const validGet = "An error occurred downloading the blob: The specified blob does not exist."
 
@@ -19,7 +20,7 @@ module.exports = async function (context) {
         uploadStatus.lastSuccess = new Date();
         uploadStatus.result = uploadResponse.data;
     } catch (error) {
-        if (error.response && error.response.data === validUpload) {
+        if (error.response && error.response.data.startsWith(validUpload)) {
             uploadStatus.lastSuccess = new Date();
             uploadStatus.result = { message: "UPLOAD returned valid error for missing payload" };
         } else {
@@ -50,15 +51,4 @@ module.exports = async function (context) {
             };
         }
     }
-
-
-    // Basic return to have text
-    context.res = {
-        status: 200,
-        body: {
-            message: "Keep-alive endpoint is working!",
-            uploadStatus,
-            getStatus
-        }
-    };
 };
