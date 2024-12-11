@@ -3,7 +3,7 @@ const axios = require('axios');
 module.exports = async function (context) {
     const baseUrl = process.env.REACT_APP_URL;
     const uploadEndpoint = `${baseUrl}/api/upload`;
-    const getEndpoint = "https://catfact.ninja/fact";
+    const getEndpoint = `${baseUrl}/api/get/?uuid=00000000`;
 
     const uploadStatus = { lastSuccess: null, lastError: null, result: null, url: uploadEndpoint };
     const getStatus = { lastSuccess: null, lastError: null, result: null, url: getEndpoint };
@@ -14,7 +14,11 @@ module.exports = async function (context) {
         uploadStatus.result = uploadResponse.data;
     } catch (error) {
         uploadStatus.lastError = new Date();
-        uploadStatus.result = error.message;
+        uploadStatus.result = {
+            message: error.message,
+            status: error.response ? error.response.status : null,
+            data: error.response ? error.response.data : null
+        };
     }
 
     try {
@@ -23,7 +27,11 @@ module.exports = async function (context) {
         getStatus.result = getResponse.data;
     } catch (error) {
         getStatus.lastError = new Date();
-        getStatus.result = error.message;
+        getStatus.result = {
+            message: error.message,
+            status: error.response ? error.response.status : null,
+            data: error.response ? error.response.data : null
+        };
     }
 
     context.res = {
@@ -34,5 +42,4 @@ module.exports = async function (context) {
             getStatus
         }
     };
-    context.log('Health check completed.');
 };
