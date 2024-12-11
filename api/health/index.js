@@ -50,5 +50,12 @@ module.exports = async function (context) {
                 data: error.response ? error.response.data : null
             };
         }
-    }
+    }    
+    context.res = {
+        status: 200,
+        body: {
+            uploadStatus,
+            getStatus
+        }
+    };
 };
