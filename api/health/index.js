@@ -20,7 +20,7 @@ module.exports = async function (context) {
         uploadStatus.lastSuccess = new Date();
         uploadStatus.result = uploadResponse.data;
     } catch (error) {
-        if (error.response && error.response.data.startsWith(validUpload)) {
+        if (error.response?.data?.startsWith(validUpload)) {
             uploadStatus.lastSuccess = new Date();
             uploadStatus.result = { message: "UPLOAD returned valid error for missing payload" };
         } else {
@@ -39,7 +39,7 @@ module.exports = async function (context) {
         getStatus.lastSuccess = new Date();
         getStatus.result = getResponse.data;
     } catch (error) {
-        if (error.response && error.response.data === validGet) {
+        if (error.response?.data?.startsWith(validGet)) {
             getStatus.lastSuccess = new Date();
             getStatus.result = { message: "GET returned valid error for unknown blob" };
         } else {
