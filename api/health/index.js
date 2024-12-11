@@ -11,7 +11,7 @@ module.exports = async function (context) {
     const getStatus = { lastSuccess: null, lastError: null, result: null, url: getEndpoint };
 
     const validUpload = "An error occurred uploading the text: contentLength cannot be null or undefined."
-    //const validGet = "An error occurred downloading the blob: The specified blob does not exist."
+    const validGet = "An error occurred downloading the blob: The specified blob does not exist."
 
     // UPLOAD testing
     try {
@@ -21,7 +21,7 @@ module.exports = async function (context) {
     } catch (error) {
         if (error.response && error.response.data === validUpload) {
             uploadStatus.lastSuccess = new Date();
-            uploadStatus.result = { message: "Upload considered successful due to valid error response." };
+            uploadStatus.result = { message: "UPLOAD returned valid error for missing payload" };
         } else {
             uploadStatus.lastError = new Date();
             uploadStatus.result = {
@@ -38,13 +38,19 @@ module.exports = async function (context) {
         getStatus.lastSuccess = new Date();
         getStatus.result = getResponse.data;
     } catch (error) {
-        getStatus.lastError = new Date();
-        getStatus.result = {
-            message: error.message,
-            status: error.response ? error.response.status : null,
-            data: error.response ? error.response.data : null
-        };
+        if (error.response && error.response.data === validGet) {
+            getStatus.lastSuccess = new Date();
+            getStatus.result = { message: "GET returned valid error for unknown blob" };
+        } else {
+            getStatus.lastError = new Date();
+            getStatus.result = {
+                message: error.message,
+                status: error.response ? error.response.status : null,
+                data: error.response ? error.response.data : null
+            };
+        }
     }
+
 
     // Basic return to have text
     context.res = {
