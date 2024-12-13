@@ -31,7 +31,9 @@ body {
     margin-left: 10%;
     margin-right: 10%;
 }
-#blobContent {
+#blobContent,
+#usage,
+#errorBlock {
     background-color: var(--b3);
     border-radius: .5em;
     padding: 1em;
