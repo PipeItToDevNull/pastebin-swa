@@ -38,7 +38,7 @@ const PastePage = () => {
 
     if (error) {
         return (
-            <div>
+            <div id="blobContent">
                 <p>{error}</p>
                 <img src="/404.png" alt="404 Error" style={{ width: '100%', height: 'auto' }} />
             </div>
