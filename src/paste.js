@@ -37,9 +37,13 @@ const PastePage = () => {
     }, [uuid]);
 
     if (error) {
-        return <div>{error}</div>;
+        return (
+            <div>
+                <p>{error}</p>
+                <img src="/404.png" alt="404 Error" />
+            </div>
+        );
     }
-
     return (
         <div id="blobContent" dangerouslySetInnerHTML={{ __html: content }} />
     );
