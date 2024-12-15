@@ -7,6 +7,7 @@ import Paste from './paste';
 
 const SITE_NAME = process.env.REACT_APP_SITE_NAME;
 
+// Primary page, it loads the upload or paste function based on the URL
 const App = () => (
     <Router>
         <Helmet>
