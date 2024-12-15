@@ -7,7 +7,15 @@ const Upload = () => {
     const upload = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/upload', { content });
+            // Create a Blob with the markdown content and the correct MIME type
+            const blob = new Blob([content], { type: 'text/markdown' });
+
+            // Send the blob directly with the correct Content-Type header
+            const response = await axios.put('/api/upload', blob, {
+                headers: {
+                    'Content-Type': 'text/markdown',
+                },
+            });
             console.log('File uploaded successfully:', response.data);
         } catch (error) {
             console.error('Error uploading file:', error);
