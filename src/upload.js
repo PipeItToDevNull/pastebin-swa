@@ -12,6 +12,11 @@ const Upload = () => {
 
     const upload = useCallback(async (e) => {
         e.preventDefault();
+        // Check if the content is empty
+        if (!content.trim()) {
+            alert('The text box is empty. Please enter some content before pasting.');
+            return;
+        }
         setIsUploading(true);
         try {
             // Create a Blob with the markdown content and the correct MIME type
@@ -43,7 +48,7 @@ const Upload = () => {
                     rows={Math.max(10, content.split('\n').length)}
                 />
                 <button type="submit" disabled={isUploading}>
-                    {isUploading ? 'Uploading...' : 'Upload'}
+                    {isUploading ? 'Uploading...' : 'Paste'}
                 </button>
             </form>
         </div>
