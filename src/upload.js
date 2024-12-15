@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import axios from 'axios';
 
 const Upload = () => {
     const [content, setContent] = useState('');
 
-    const handleChange = (e) => {
+    const handleChange = useCallback((e) => {
         setContent(e.target.value);
-    };
+    }, []);
 
-    const upload = async (e) => {
+    const upload = useCallback(async (e) => {
         e.preventDefault();
         try {
             // Create a Blob with the markdown content and the correct MIME type
@@ -26,7 +26,7 @@ const Upload = () => {
         } catch (error) {
             console.error('Error uploading file:', error);
         }
-    };
+    }, [content]);
 
     return (
         <div id="uploadBlock">
