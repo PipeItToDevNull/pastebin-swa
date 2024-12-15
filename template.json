@@ -64,7 +64,7 @@
                 "actions": {
                   "baseBlob": {
                     "delete": {
-                      "daysAfterModificationGreaterThan": 1
+                        "daysAfterModificationGreaterThan": "[parameters('containerLifecycleAge')]"
                     }
                   }
                 }
@@ -123,6 +123,12 @@
       "metadata": {
         "description": "Name of the Blob Container"
       }
+    },
+    "containerLifecycleAge": {
+        "type": "int",
+        "metadata": {
+          "description": "Number of days before blob deletion"
+        }
     }
   }
 }

@@ -4,7 +4,13 @@ An Azure Static Web App with API functions for uploading and returning plain tex
 ## Variables
 `.env.example` is used to handle the SWA frontend. These entries should be placed into your Github repo Secrets & Variables area as Variables
 
-`REACT_APP_URL` and `AzureBlobConnectionString` should be entered as variables in your Azure SWA dashboard.
+The following should be entered as Environment Variables in your Azure SWA dashboard.
+- `REACT_APP_URL`
+    - The URL that your website will be running under
+- `REACT_APP_BLOB_CONTAINER`
+    - The Azure blob container name that you used in `parameters.json`
+- `AzureBlobConnectionString`
+    - The Azure blob connection string that you find in the Azure control panel for your created blob storage
 
 ## APIs
 ### Put
@@ -30,7 +36,7 @@ Parameters for the ARM `template.json` are defined in `parameters.json`.
 
 ```bash
 az login
-az group create --name ExampleGroup --location eastus
+az group create --name ExampleGroup --location eastus2
 az deployment group create --name ExampleDeployment --resource-group ExampleGroup --template-file ./template.json --parameters ./parameters.json
 ```
 

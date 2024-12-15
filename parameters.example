@@ -25,6 +25,9 @@
     },
     "containerName": {
       "value": "<your-container-name>"
+    },
+    "containerLifecycleAge": {
+        "value": 1 //This is number of days without quotes. Remove this comment
     }
   }
 }
