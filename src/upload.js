@@ -4,6 +4,10 @@ import axios from 'axios';
 const Upload = () => {
     const [content, setContent] = useState('');
 
+    const handleChange = (e) => {
+        setContent(e.target.value);
+    };
+
     const upload = async (e) => {
         e.preventDefault();
         try {
@@ -18,14 +22,10 @@ const Upload = () => {
             });
 
             // Redirect to the URL returned by the API
-            window.location.href = response.data.url;
+            window.location.href = response.data;
         } catch (error) {
             console.error('Error uploading file:', error);
         }
-    };
-
-    const handleChange = (e) => {
-        setContent(e.target.value);
     };
 
     return (
