@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 
+// Upload function that creates a text box for user input then uploads that content as a blob with markdown mimetype to the API. It redirects the user to the uploaded blob after the API returns a URL
 const Upload = () => {
     const [content, setContent] = useState('');
 
