@@ -32,11 +32,24 @@ body {
     margin-right: 10%;
 }
 #blobContent,
-#usage,
+#uploadBlock,
 #errorBlock {
     background-color: var(--b3);
     border-radius: .5em;
     padding: 1em;
+}
+#uploadBlock textarea {
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    overflow: hidden;
+    color: var(--b0);
+    background-color: var(--w0);
+    border: none;
+}
+#uploadBlock textarea:focus {
+    outline: none;
+    border: none;
 }
 footer {
     text-align: right;

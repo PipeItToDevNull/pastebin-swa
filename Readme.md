@@ -14,6 +14,7 @@ The upload function listens on `/api/upload` for PUT or POST requests. The uploa
 ##### Basic upload
 ```
 curl -T test.md https://contoso.com/api/upload
+curl -H "Content-Type: text/markdown" -T test.md https://contoso.com/api/upload
 ```
 
 ##### HTML upload
