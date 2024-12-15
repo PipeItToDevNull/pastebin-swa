@@ -15,9 +15,9 @@ const App = () => (
         </Helmet>
         <div id="container">
             <div id="header">
-                <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <h1 id="site_name">{SITE_NAME}</h1>
-                </a>
+                <h1 id="site_name">
+                    <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>{SITE_NAME}</a>
+                </h1>
             </div>
             <Routes>
                 <Route path="/:uuid" element={<Paste />} />
