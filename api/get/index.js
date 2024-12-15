@@ -43,9 +43,16 @@ module.exports = async function (context, req) {
             }
         };
     } catch (err) {
-        context.res = { 
-            status: 500, 
-            body: `An error occurred downloading the blob: ${err.message}`
-        };
+        if (err.message.includes("The specified blob does not exist.")) {
+            context.res = {
+                status: 404, // Not Found
+                body: "The specified blob does not exist"
+            };
+        } else {
+            context.res = { 
+                status: 500, 
+                body: `An error occurred downloading the blob: ${err.message}`
+            };
+        }
     }
 }

@@ -26,7 +26,7 @@ const PastePage = () => {
                     }
                 } else {
                     const errorMessage = await response.text();
-                    setError(`API Error ${response.status}: ${errorMessage}`);
+                    setError(`${response.status}: ${errorMessage}`);
                 }
             } catch (error) {
                 setError(`Fetch Error: ${error.message}`);
