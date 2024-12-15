@@ -1,17 +1,13 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { loadUsage } from './usage';
+import Upload from './upload';
 import Footer from './footer';
 import Paste from './paste';
 
 const SITE_NAME = process.env.REACT_APP_SITE_NAME;
 
 function App() {
-    useEffect(() => {
-        loadUsage();
-    }, []);
-
     return (
         <Router>
             <Helmet>
@@ -23,7 +19,7 @@ function App() {
                 </div>
                 <Routes>
                     <Route path="/:uuid" element={<Paste />} />
-                    <Route path="/" element={<div id="usage">Loading...</div>} />
+                    <Route path="/" element={<Upload />} />
                 </Routes>
                 <Footer />
             </div>
