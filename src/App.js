@@ -14,9 +14,9 @@ function App() {
             </Helmet>
             <div id="container">
                 <div id="header">
-                    <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
                         <h1 id="site_name">{SITE_NAME}</h1>
-                    </Link>
+                    </a>
                 </div>
                 <Routes>
                     <Route path="/:uuid" element={<Paste />} />
