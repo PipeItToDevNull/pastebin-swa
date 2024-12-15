@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 const Upload = () => {
@@ -16,7 +16,9 @@ const Upload = () => {
                     'Content-Type': 'text/markdown',
                 },
             });
-            console.log('File uploaded successfully:', response.data);
+
+            // Redirect to the URL returned by the API
+            window.location.href = response.data.url;
         } catch (error) {
             console.error('Error uploading file:', error);
         }
