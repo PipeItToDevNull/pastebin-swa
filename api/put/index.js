@@ -3,7 +3,7 @@ const uuid = require('uuid');
 const blobServiceString = BlobServiceClient.fromConnectionString(process.env.AzureBlobConnectionString);
 
 module.exports = async function (context, req) {
-    const containerClient = blobServiceString.getContainerClient('linx-container'); // define the azure storage container to be used
+    const containerClient = blobServiceString.getContainerClient(process.env.REACT_APP_BLOB_CONTAINER); // define the azure storage container to be used
     const blobUUID = uuid.v4().split('-')[0]; // Get the first part of the UUID
     const blockBlobClient = containerClient.getBlockBlobClient(blobUUID);
     const text = req.body;
