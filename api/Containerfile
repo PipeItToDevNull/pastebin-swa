@@ -1,0 +1,15 @@
+FROM node:slim
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm install
+
+EXPOSE 3000
+
+# Start the application
+CMD ["node", "api.js"]
+
+LABEL org.opencontainers.image.source https://github.com/PipeItToDevNull/pastebin-swa
+LABEL org.opencontainers.image.description An Azure Static Web App with API functions for uploading and returning plain text markdown files to be displayed on the site dynamically.
