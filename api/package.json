@@ -9,6 +9,6 @@
   "dependencies": {
     "@azure/storage-blob": "12.26.0",
     "axios": "^1.7.9",
-    "uuid": "11.0.3"
+    "uuid": "11.0.4"
   }
 }
