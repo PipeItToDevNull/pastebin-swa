@@ -1,5 +1,5 @@
 // Footer with project link and retention notice.
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const Footer = () => {
   useEffect(() => {

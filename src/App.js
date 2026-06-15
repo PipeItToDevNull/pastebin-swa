@@ -1,5 +1,5 @@
 // Top-level router and page shell for upload and paste views.
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Upload from './upload';
 import Footer from './footer';

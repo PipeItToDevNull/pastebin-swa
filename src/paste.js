@@ -1,5 +1,5 @@
 // Paste page: fetches, interprets, and renders paste content by UUID.
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { marked } from 'marked';
 import { apiUrl } from './api';
