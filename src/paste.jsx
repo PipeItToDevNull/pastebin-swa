@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
-import { apiUrl } from './api';
 
 // Paste view component that fetches and renders content for the current UUID.
 const PastePage = () => {
@@ -15,7 +14,7 @@ const PastePage = () => {
         // Retrieves paste data and converts markdown to HTML when needed.
         const fetchPasteContent = async () => {
             try {
-                const response = await fetch(apiUrl(`/download?uuid=${uuid}`));
+                const response = await fetch(`/api/download?uuid=${uuid}`);
                 const responseContentType = response.headers.get('content-type');
 
                 if (response.ok) {
@@ -43,7 +42,7 @@ const PastePage = () => {
         return (
             <div id="errorBlock">
                 <p>{error}</p>
-                <img src="/404.png" alt="404 Error" style={{ width: '100%', height: 'auto' }} />
+                <img className="errorImage" src="/404.png" alt="404 Error" />
             </div>
         );
     }

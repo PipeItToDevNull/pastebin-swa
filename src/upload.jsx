@@ -1,6 +1,5 @@
 // Upload page: sends textarea content to the API and redirects to the paste URL.
 import { useState, useCallback } from 'react';
-import { apiUrl } from './api';
 
 // Upload page component with textarea state and submit behavior.
 const Upload = () => {
@@ -22,7 +21,7 @@ const Upload = () => {
         }
         setIsUploading(true);
         try {
-            const response = await fetch(apiUrl('/upload'), {
+            const response = await fetch('/api/upload', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'text/markdown',
