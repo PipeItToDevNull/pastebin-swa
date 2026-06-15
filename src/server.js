@@ -24,6 +24,17 @@ function getPastePath(pasteId) {
     return path.join(storageDir, `${pasteId}.json`);
 }
 
+app.use((req, res, next) => {
+    const startedAt = Date.now();
+
+    res.on('finish', () => {
+        const durationMs = Date.now() - startedAt;
+        console.log(`${new Date().toISOString()} ${req.method} ${req.originalUrl} ${res.statusCode} ${durationMs}ms`);
+    });
+
+    next();
+});
+
 app.get('/api/download', async (req, res) => {
     const pasteId = String(req.query.uuid || '');
 
@@ -120,8 +131,12 @@ async function startServer() {
         await fs.mkdir(storageDir, { recursive: true });
 
         app.listen(port, () => {
-            console.log(`Server is running on port ${port}`);
+            console.log('KittyPost server started');
+            console.log(`Listening on port ${port}`);
+            console.log(`Serving static files from ${buildDir}`);
             console.log(`Using local storage at ${storageDir}`);
+            console.log(`Max request body size is ${bodySizeLimit}`);
+            console.log('Available endpoints: GET /health, GET /api/health, PUT /api/upload, GET /api/download?uuid=<id>');
         });
     } catch (err) {
         console.error(`Failed to initialize local storage: ${err.message}`);
