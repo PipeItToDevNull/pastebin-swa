@@ -47,8 +47,8 @@ const PastePage = () => {
             </div>
         );
     }
-    // skipcq: JS-0440 - content is sanitized with DOMPurify before HTML injection.
     return (
+        // skipcq: JS-0440 - content is sanitized with DOMPurify before HTML injection.
         <div id="pasteContent" dangerouslySetInnerHTML={{ __html: content }} />
     );
 };
