@@ -79,7 +79,9 @@ app.put('/api/upload', express.raw({ type: () => true, limit: bodySizeLimit }), 
             data: Buffer.from(text, 'utf8').toString('base64')
         }), 'utf8');
 
-        res.send(`/${pasteId}`);
+        const proto = req.headers['x-forwarded-proto'] || req.protocol;
+        const host = req.headers['x-forwarded-host'] || req.headers.host;
+        res.send(`${proto}://${host}/${pasteId}\n`);
     } catch (err) {
         res.status(500).send(`An error occurred uploading the paste: ${err.message}`);
     }

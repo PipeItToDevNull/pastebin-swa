@@ -2,12 +2,9 @@ FROM node:slim AS build
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
-
 COPY . .
 
-RUN npm run build
+RUN npm install && npm run build
 
 FROM node:slim
 
