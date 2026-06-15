@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 // Footer component with repository link and retention message.
 const Footer = () => {
   useEffect(() => {
-    const repoUrl = import.meta.env.VITE_REPO_URL || '/';
+    const repoUrl = window.__CONFIG__?.REPO_URL || '/';
     document.getElementById('repo_url').href = repoUrl;
   }, []);
 
-  const maxAgeHours = Number(import.meta.env.VITE_PASTE_MAX_AGE_HOURS) || 24;
+  const maxAgeHours = Number(window.__CONFIG__?.PASTE_MAX_AGE_HOURS) || 24;
   const retentionLabel = maxAgeHours === 1 ? '1 hour' : `${maxAgeHours} hours`;
 
   return (
