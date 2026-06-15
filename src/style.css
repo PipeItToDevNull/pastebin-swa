@@ -31,7 +31,7 @@ body {
     margin-left: 10%;
     margin-right: 10%;
 }
-#blobContent,
+#pasteContent,
 #uploadBlock,
 #errorBlock {
     background-color: var(--b3);
@@ -74,7 +74,7 @@ a:active {
   These are fixes for .factoid all, some will be perm and 
   some should be incorporated into the generated output 
 */
-ul {
+/* ul {
   white-space: wrap;
   list-style-type: none;
   padding: 0;
@@ -82,8 +82,8 @@ ul {
 }
 ul li {
   display: inherit !important;
-}
+} */
 /* make non important once fixes implemented */
-ul li:nth-child(2n) {
+/* ul li:nth-child(2n) {
   background-color: var(--color-frost) !important;
-}
+} */

@@ -87,18 +87,6 @@ typings/
 dist
 out
 
-# Azure Functions artifacts
-bin
-obj
-appsettings.json
-local.settings.json
-
-# Azurite artifacts
-__blobstorage__
-__queuestorage__
-__azurite_db*__.json
-
-parameters.json
 .DS_Store
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
@@ -112,6 +100,7 @@ parameters.json
 
 # production
 /build
+/data
 
 # misc
 .DS_Store

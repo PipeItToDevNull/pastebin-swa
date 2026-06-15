@@ -1,6 +1,8 @@
+// Paste page: fetches, interprets, and renders paste content by UUID.
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { marked } from 'marked';
+import { apiUrl } from './api';
 
 const PastePage = () => {
     const { uuid } = useParams();
@@ -9,9 +11,9 @@ const PastePage = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchBlobContent = async () => {
+        const fetchPasteContent = async () => {
             try {
-                const response = await fetch(`/api/get/?uuid=${uuid}`);
+                const response = await fetch(apiUrl(`/download?uuid=${uuid}`));
                 const contentType = response.headers.get("content-type");
                 setContentType(contentType);
 
@@ -33,7 +35,7 @@ const PastePage = () => {
             }
         };
 
-        fetchBlobContent();
+        fetchPasteContent();
     }, [uuid]);
 
     if (error) {
@@ -45,7 +47,7 @@ const PastePage = () => {
         );
     }
     return (
-        <div id="blobContent" dangerouslySetInnerHTML={{ __html: content }} />
+        <div id="pasteContent" dangerouslySetInnerHTML={{ __html: content }} />
     );
 };
 

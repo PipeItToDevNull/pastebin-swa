@@ -1,8 +1,9 @@
+// Footer with project link and retention notice.
 import React, { useEffect } from 'react';
 
 const Footer = () => {
   useEffect(() => {
-    const repoUrl = process.env.REACT_APP_REPO_URL;
+    const repoUrl = import.meta.env.VITE_REPO_URL || '/';
     document.getElementById('repo_url').href = repoUrl;
   }, []);
 
