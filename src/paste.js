@@ -1,6 +1,7 @@
 // Paste page: fetches, interprets, and renders paste content by UUID.
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import { apiUrl } from './api';
 
@@ -20,9 +21,9 @@ const PastePage = () => {
                 if (response.ok) {
                     const text = await response.text();
                     if (responseContentType === 'text/html; charset=utf-8') {
-                        setContent(text);
+                        setContent(DOMPurify.sanitize(text));
                     } else if (responseContentType === 'text/markdown; charset=utf-8') {
-                        setContent(marked.parse(text));
+                        setContent(DOMPurify.sanitize(marked.parse(text)));
                     } else {
                         setContent(text);
                     }
