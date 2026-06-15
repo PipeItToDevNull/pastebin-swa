@@ -1,5 +1,5 @@
 {
-  "name": "kittypost",
+  "name": "KittyPost",
   "version": "1.0.0",
   "description": "A single-container paste app with a React frontend and JS backend",
   "main": "index.js",

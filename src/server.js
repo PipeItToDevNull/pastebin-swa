@@ -126,6 +126,33 @@ app.use((req, res, next) => {
     res.sendFile(indexPath);
 });
 
+const pasteMaxAgeHours = Number(process.env.VITE_PASTE_MAX_AGE_HOURS) || 24;
+const PASTE_MAX_AGE_MS = pasteMaxAgeHours * 60 * 60 * 1000;
+const cleanupIntervalHours = Number(process.env.CLEANUP_INTERVAL_HOURS) || 1;
+const CLEANUP_INTERVAL_MS = cleanupIntervalHours * 60 * 60 * 1000;
+
+async function cleanupExpiredPastes() {
+    let deleted = 0;
+    try {
+        const files = await fs.readdir(storageDir);
+        const now = Date.now();
+        for (const file of files) {
+            if (!file.endsWith('.json')) continue;
+            const filePath = path.join(storageDir, file);
+            const stat = await fs.stat(filePath);
+            if (now - stat.mtimeMs > PASTE_MAX_AGE_MS) {
+                await fs.unlink(filePath);
+                deleted++;
+            }
+        }
+    } catch (err) {
+        console.error(`Cleanup error: ${err.message}`);
+    }
+    if (deleted > 0) {
+        console.log(`${new Date().toISOString()} Cleanup deleted ${deleted} expired paste(s)`);
+    }
+}
+
 async function startServer() {
     try {
         await fs.mkdir(storageDir, { recursive: true });
@@ -136,8 +163,13 @@ async function startServer() {
             console.log(`Serving static files from ${buildDir}`);
             console.log(`Using local storage at ${storageDir}`);
             console.log(`Max request body size is ${bodySizeLimit}`);
+            console.log(`Paste retention: ${pasteMaxAgeHours} hour(s), cleanup interval: ${cleanupIntervalHours} hour(s)`);
             console.log('Available endpoints: GET /health, GET /api/health, PUT /api/upload, GET /api/download?uuid=<id>');
         });
+
+        // Run once at startup to catch anything that expired while the container was down
+        await cleanupExpiredPastes();
+        setInterval(cleanupExpiredPastes, CLEANUP_INTERVAL_MS);
     } catch (err) {
         console.error(`Failed to initialize local storage: ${err.message}`);
         process.exit(1);
