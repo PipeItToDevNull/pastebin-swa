@@ -18,6 +18,6 @@ RUN npm install --omit=dev
 COPY --from=build /app/build ./build
 COPY --from=build /app/src/server.js ./src/server.js
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["node", "src/server.js"]

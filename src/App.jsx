@@ -5,7 +5,7 @@ import Upload from './upload';
 import Footer from './footer';
 import Paste from './paste';
 
-const SITE_NAME = import.meta.env.VITE_SITE_NAME || 'KittyPost';
+const SITE_NAME = window.__CONFIG__?.SITE_NAME || 'KittyPost';
 
 // Main app shell with routing between upload and paste views.
 const App = () => {

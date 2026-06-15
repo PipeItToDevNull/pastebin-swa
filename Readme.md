@@ -2,23 +2,31 @@
 A single-container paste app with a React frontend and local filesystem-backed backend.
 
 ## Variables
-`.env.example` shows the variables used by both the frontend build and the backend server.
+All variables are configured via environment variables passed at container launch.
 
-The following should be placed in the single root `.env` file or injected into the container environment.
-- `VITE_SITE_NAME`
-    - The site name embedded into the frontend build.
-- `VITE_REPO_URL`
-    - The GitHub URL shown in the footer.
-- `VITE_PASTE_MAX_AGE_HOURS`
-    - How many hours a paste is kept before automatic deletion. Used by both the frontend (retention notice) and the server (cleanup). Default: `24`.
-- `CLEANUP_INTERVAL_HOURS`
-    - How often the server scans for and deletes expired pastes. Default: `1`.
-- `PORT`
-    - The port the container listens on.
-- `STORAGE_DIR`
-    - Where paste files are stored on disk.
-- `MAX_BODY_SIZE`
-    - Maximum upload size accepted by the API.
+| Variable | Default | Description |
+|---|---|---|
+| `SITE_NAME` | `KittyPost` | Site name shown in the header and page title. |
+| `REPO_URL` | *(empty)* | GitHub URL shown in the footer. Leave blank to link to `#`. |
+| `PASTE_MAX_AGE_HOURS` | `24` | How many hours a paste is kept before deletion. Used by the retention notice in the UI and the server-side cleanup job. |
+| `CLEANUP_INTERVAL_HOURS` | `1` | How often (in hours) the server scans for and deletes expired pastes. |
+| `PORT` | `80` | Port the server listens on inside the container. |
+| `STORAGE_DIR` | `/app/data` | Path where paste files are stored. Mount a volume here for persistence. |
+| `MAX_BODY_SIZE` | `1mb` | Maximum upload size accepted by the API (Express/bytes format: `1mb`, `512kb`, etc.). |
+
+## Running the container
+
+```bash
+podman build -t pastebin-swa .
+podman run --rm -p 80:80 \
+  -e SITE_NAME=MyPaste \
+  -e REPO_URL=https://github.com/you/repo \
+  -e PASTE_MAX_AGE_HOURS=48 \
+  -e CLEANUP_INTERVAL_HOURS=1 \
+  -e STORAGE_DIR=/data \
+  -v /host/paste-data:/data \
+  pastebin-swa
+```
 
 ## APIs
 ### Put
@@ -40,16 +48,8 @@ curl -H "Content-Type: text/html" -T test.html https://contoso.com/api/upload
 ### Get
 The download function listens on `/api/download` and returns the stored paste for the UUID in the URL.
 
-To run the single container locally:
-
-```bash
-npm run build
-podman build -t paste-app .
-podman run --rm -p 3000:3000 --env-file .env paste-app
-```
-
 ## Technical notes
 - The frontend calls the backend on the same origin via `/api`.
 - The backend serves the built React app from `build/`.
 - The backend server entrypoint is `src/server.js`.
-- The root `.env` file controls both the frontend build-time values and the backend runtime settings.
+- `SITE_NAME`, `REPO_URL`, and `PASTE_MAX_AGE_HOURS` are injected into `index.html` at request time by the server as `window.__CONFIG__`, making them runtime-configurable.

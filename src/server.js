@@ -1,17 +1,13 @@
 // Express server that provides paste APIs and serves the built frontend.
 const crypto = require('crypto');
 const express = require('express');
-const dotenv = require('dotenv');
 const fs = require('fs/promises');
 const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
 
-// Load environment variables from the centralized repo-root .env file.
-dotenv.config({ path: path.join(rootDir, '.env') });
-
 const app = express();
-const port = Number(process.env.PORT) || 3000;
+const port = Number(process.env.PORT) || 80;
 const uuidRegex = /^[0-9a-f]{8}$/i;
 const storageDirSetting = process.env.STORAGE_DIR || 'src/data';
 const storageDir = path.isAbsolute(storageDirSetting)
@@ -118,20 +114,33 @@ app.get('/health', async (req, res) => {
     await sendHealth(res);
 });
 
-app.use(express.static(buildDir));
+app.use(express.static(buildDir, { index: false }));
 
-// Serves the SPA entrypoint for non-API routes.
-app.use((req, res, next) => {
+// Serves the SPA entrypoint for non-API routes, injecting runtime config.
+app.use(async (req, res, next) => {
     if (req.path.startsWith('/api/')) {
         next();
         return;
     }
 
-    const indexPath = path.join(buildDir, 'index.html');
-    res.sendFile(indexPath);
+    try {
+        const indexPath = path.join(buildDir, 'index.html');
+        let html = await fs.readFile(indexPath, 'utf8');
+        const config = {
+            SITE_NAME: process.env.SITE_NAME || 'KittyPost',
+            REPO_URL: process.env.REPO_URL || '',
+            PASTE_MAX_AGE_HOURS: Number(process.env.PASTE_MAX_AGE_HOURS) || 24,
+        };
+        const configScript = `<script>window.__CONFIG__ = ${JSON.stringify(config)};</script>`;
+        html = html.replace('</head>', `  ${configScript}\n  </head>`);
+        res.setHeader('Content-Type', 'text/html');
+        res.send(html);
+    } catch (err) {
+        next(err);
+    }
 });
 
-const pasteMaxAgeHours = Number(process.env.VITE_PASTE_MAX_AGE_HOURS) || 24;
+const pasteMaxAgeHours = Number(process.env.PASTE_MAX_AGE_HOURS) || 24;
 const PASTE_MAX_AGE_MS = pasteMaxAgeHours * 60 * 60 * 1000;
 const cleanupIntervalHours = Number(process.env.CLEANUP_INTERVAL_HOURS) || 1;
 const CLEANUP_INTERVAL_MS = cleanupIntervalHours * 60 * 60 * 1000;
