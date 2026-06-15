@@ -5,10 +5,14 @@ A single-container paste app with a React frontend and local filesystem-backed b
 `.env.example` shows the variables used by both the frontend build and the backend server.
 
 The following should be placed in the single root `.env` file or injected into the container environment.
-- `REACT_APP_SITE_NAME`
+- `VITE_SITE_NAME`
     - The site name embedded into the frontend build.
-- `REACT_APP_REPO_URL`
+- `VITE_REPO_URL`
     - The GitHub URL shown in the footer.
+- `VITE_PASTE_MAX_AGE_HOURS`
+    - How many hours a paste is kept before automatic deletion. Used by both the frontend (retention notice) and the server (cleanup). Default: `24`.
+- `CLEANUP_INTERVAL_HOURS`
+    - How often the server scans for and deletes expired pastes. Default: `1`.
 - `PORT`
     - The port the container listens on.
 - `STORAGE_DIR`
@@ -18,11 +22,12 @@ The following should be placed in the single root `.env` file or injected into t
 
 ## APIs
 ### Put
-The upload function listens on `/api/upload` for PUT requests. The upload is stored on disk and a UUID appended to a URL is returned to the client in the format `https://contoso.com/UUID`.
+The upload function listens on `/api/upload` for PUT requests. The upload is stored on disk and the full URL to the paste is returned to the client, e.g. `https://contoso.com/f046f390`.
 
 #### Example
 ##### Basic upload
 ```
+curl -T test.txt https://contoso.com/api/upload
 curl -T test.md https://contoso.com/api/upload
 curl -H "Content-Type: text/markdown" -T test.md https://contoso.com/api/upload
 ```
