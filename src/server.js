@@ -135,6 +135,9 @@ const pasteMaxAgeHours = Number(process.env.VITE_PASTE_MAX_AGE_HOURS) || 24;
 const PASTE_MAX_AGE_MS = pasteMaxAgeHours * 60 * 60 * 1000;
 const cleanupIntervalHours = Number(process.env.CLEANUP_INTERVAL_HOURS) || 1;
 const CLEANUP_INTERVAL_MS = cleanupIntervalHours * 60 * 60 * 1000;
+let cleanupIntervalHandle = null;
+let httpServer = null;
+let isShuttingDown = false;
 
 // Removes paste files older than the configured retention window.
 async function cleanupExpiredPastes() {
@@ -164,7 +167,7 @@ async function startServer() {
     try {
         await fs.mkdir(storageDir, { recursive: true });
 
-        app.listen(port, () => {
+        httpServer = app.listen(port, () => {
             console.log('KittyPost server started');
             console.log(`Listening on port ${port}`);
             console.log(`Serving static files from ${buildDir}`);
@@ -176,11 +179,60 @@ async function startServer() {
 
         // Run once at startup to catch anything that expired while the container was down
         await cleanupExpiredPastes();
-        setInterval(cleanupExpiredPastes, CLEANUP_INTERVAL_MS);
+        cleanupIntervalHandle = setInterval(cleanupExpiredPastes, CLEANUP_INTERVAL_MS);
     } catch (err) {
         throw new Error(`Failed to initialize local storage: ${err.message}`);
     }
 }
+
+// Gracefully handles termination signals (Ctrl+C, container stop).
+async function shutdown(signal) {
+    if (isShuttingDown) {
+        return;
+    }
+
+    isShuttingDown = true;
+    console.log(`${signal} received, shutting down gracefully`);
+
+    if (cleanupIntervalHandle) {
+        clearInterval(cleanupIntervalHandle);
+        cleanupIntervalHandle = null;
+    }
+
+    if (!httpServer) {
+        return;
+    }
+
+    if (!httpServer.listening) {
+        httpServer = null;
+        return;
+    }
+
+    await new Promise((resolve, reject) => {
+        httpServer.close((err) => {
+            if (err && err.code !== 'ERR_SERVER_NOT_RUNNING') {
+                reject(err);
+                return;
+            }
+            httpServer = null;
+            resolve();
+        });
+    });
+}
+
+process.on('SIGINT', () => {
+    shutdown('SIGINT').catch((err) => {
+        process.exitCode = 1;
+        throw err;
+    });
+});
+
+process.on('SIGTERM', () => {
+    shutdown('SIGTERM').catch((err) => {
+        process.exitCode = 1;
+        throw err;
+    });
+});
 
 startServer().catch((err) => {
     throw err;
