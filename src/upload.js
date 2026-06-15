@@ -1,15 +1,18 @@
+// Upload page: sends textarea content to the API and redirects to the paste URL.
 import { useState, useCallback } from 'react';
-import axios from 'axios';
+import { apiUrl } from './api';
 
-// Upload function that creates a text box for user input then uploads that content as a blob with markdown mimetype to the API. It redirects the user to the uploaded blob after the API returns a URL
+// Upload page component with textarea state and submit behavior.
 const Upload = () => {
     const [content, setContent] = useState('');
     const [isUploading, setIsUploading] = useState(false);
 
+    // Keeps textarea state synchronized with user input.
     const handleChange = useCallback((e) => {
         setContent(e.target.value);
     }, []);
 
+    // Sends paste content to the API and redirects to the returned URL.
     const upload = useCallback(async (e) => {
         e.preventDefault();
         // Check if the content is empty
@@ -19,18 +22,22 @@ const Upload = () => {
         }
         setIsUploading(true);
         try {
-            // Create a Blob with the markdown content and the correct MIME type
-            const blob = new Blob([content], { type: 'text/markdown' });
-
-            // Send the blob directly with the correct Content-Type header
-            const response = await axios.put('/api/upload', blob, {
+            const response = await fetch(apiUrl('/upload'), {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'text/markdown',
                 },
+                body: content,
             });
 
+            if (!response.ok) {
+                throw new Error(`Upload failed with status ${response.status}`);
+            }
+
+            const uploadUrl = await response.text();
+
             // Redirect to the URL returned by the API
-            window.location.href = response.data;
+            window.location.href = uploadUrl;
         } catch (error) {
             console.error('Error uploading file:', error);
             setIsUploading(false); // Re-enable button if there's an error

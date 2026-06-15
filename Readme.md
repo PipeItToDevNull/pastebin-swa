@@ -1,24 +1,33 @@
 # KittyPost
-An Azure Static Web App with API functions for uploading and returning plain text markdown files to be displayed on the site dynamically.
+A single-container paste app with a React frontend and local filesystem-backed backend.
 
 ## Variables
-`.env.example` is used to handle the SWA frontend. These entries should be placed into your Github repo Secrets & Variables area as Variables
+`.env.example` shows the variables used by both the frontend build and the backend server.
 
-The following should be entered as Environment Variables in your Azure SWA dashboard.
-- `REACT_APP_URL`
-    - The URL that your website will be running under
-- `REACT_APP_BLOB_CONTAINER`
-    - The Azure blob container name that you used in `parameters.json`
-- `AzureBlobConnectionString`
-    - The Azure blob connection string that you find in the Azure control panel for your created blob storage
+The following should be placed in the single root `.env` file or injected into the container environment.
+- `VITE_SITE_NAME`
+    - The site name embedded into the frontend build.
+- `VITE_REPO_URL`
+    - The GitHub URL shown in the footer.
+- `VITE_PASTE_MAX_AGE_HOURS`
+    - How many hours a paste is kept before automatic deletion. Used by both the frontend (retention notice) and the server (cleanup). Default: `24`.
+- `CLEANUP_INTERVAL_HOURS`
+    - How often the server scans for and deletes expired pastes. Default: `1`.
+- `PORT`
+    - The port the container listens on.
+- `STORAGE_DIR`
+    - Where paste files are stored on disk.
+- `MAX_BODY_SIZE`
+    - Maximum upload size accepted by the API.
 
 ## APIs
 ### Put
-The upload function listens on `/api/upload` for PUT or POST requests. The upload is stored in Azure blob storage and a UUID appended to a URL is returned to the client in the format `https://contoso.com/UUID`
+The upload function listens on `/api/upload` for PUT requests. The upload is stored on disk and the full URL to the paste is returned to the client, e.g. `https://contoso.com/f046f390`.
 
 #### Example
 ##### Basic upload
 ```
+curl -T test.txt https://contoso.com/api/upload
 curl -T test.md https://contoso.com/api/upload
 curl -H "Content-Type: text/markdown" -T test.md https://contoso.com/api/upload
 ```
@@ -29,18 +38,18 @@ curl -H "Content-Type: text/html" -T test.html https://contoso.com/api/upload
 ```
 
 ### Get
-The get function listens on `/api/get` and is only intended to be used by the SWA to request a blob based on the UUID in the URL.
+The download function listens on `/api/download` and returns the stored paste for the UUID in the URL.
 
-## Deploying the ARM template
-Parameters for the ARM `template.json` are defined in `parameters.json`.
+To run the single container locally:
 
 ```bash
-az login
-az group create --name ExampleGroup --location eastus2
-az deployment group create --name ExampleDeployment --resource-group ExampleGroup --template-file ./template.json --parameters ./parameters.json
+npm run build
+podman build -t paste-app .
+podman run --rm -p 3000:3000 --env-file .env paste-app
 ```
 
-Once deployed, the SWA will now be pointed at your repo and is waiting for a build to be submitted. You must create and configure your own GithubAction for this portion of the deployment.
-
 ## Technical notes
-- `staticwebapp.config.json` is used to route all URLs back to index.html, this allows the React router to hand off UUID URLs to the API.
+- The frontend calls the backend on the same origin via `/api`.
+- The backend serves the built React app from `build/`.
+- The backend server entrypoint is `src/server.js`.
+- The root `.env` file controls both the frontend build-time values and the backend runtime settings.
