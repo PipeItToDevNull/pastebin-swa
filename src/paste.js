@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { marked } from 'marked';
 import { apiUrl } from './api';
 
+// Paste view component that fetches and renders content for the current UUID.
 const PastePage = () => {
     const { uuid } = useParams();
     const [content, setContent] = useState('');
@@ -11,6 +12,7 @@ const PastePage = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        // Retrieves paste data and converts markdown to HTML when needed.
         const fetchPasteContent = async () => {
             try {
                 const response = await fetch(apiUrl(`/download?uuid=${uuid}`));

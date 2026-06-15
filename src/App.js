@@ -7,7 +7,7 @@ import Paste from './paste';
 
 const SITE_NAME = import.meta.env.VITE_SITE_NAME || 'KittyPost';
 
-// Primary page, it loads the upload or paste function based on the URL
+// Main app shell with routing between upload and paste views.
 const App = () => {
     useEffect(() => {
         document.title = SITE_NAME;

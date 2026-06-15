@@ -20,10 +20,12 @@ const storageDir = path.isAbsolute(storageDirSetting)
 const buildDir = path.resolve(rootDir, 'build');
 const bodySizeLimit = process.env.MAX_BODY_SIZE || '1mb';
 
+// Maps a paste ID to its JSON storage file path.
 function getPastePath(pasteId) {
     return path.join(storageDir, `${pasteId}.json`);
 }
 
+// Logs request method, URL, status, and latency for every response.
 app.use((req, res, next) => {
     const startedAt = Date.now();
 
@@ -35,6 +37,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// Returns stored paste content by UUID.
 app.get('/api/download', async (req, res) => {
     const pasteId = String(req.query.uuid || '');
 
@@ -59,6 +62,7 @@ app.get('/api/download', async (req, res) => {
     }
 });
 
+// Accepts raw text/markdown/html payloads and stores them as a paste.
 app.put('/api/upload', express.raw({ type: () => true, limit: bodySizeLimit }), async (req, res) => {
     const pasteId = crypto.randomUUID().split('-')[0];
     const mimetype = (req.headers['content-type'] || 'text/plain').split(';')[0];
@@ -87,6 +91,7 @@ app.put('/api/upload', express.raw({ type: () => true, limit: bodySizeLimit }), 
     }
 });
 
+// Shared health response used by both health endpoints.
 async function sendHealth(res) {
     try {
         await fs.mkdir(storageDir, { recursive: true });
@@ -108,16 +113,14 @@ async function sendHealth(res) {
     }
 }
 
-app.get('/api/health', async (req, res) => {
-    await sendHealth(res);
-});
-
+// Root health endpoint for container checks.
 app.get('/health', async (req, res) => {
     await sendHealth(res);
 });
 
 app.use(express.static(buildDir));
 
+// Serves the SPA entrypoint for non-API routes.
 app.use((req, res, next) => {
     if (req.path.startsWith('/api/')) {
         next();
@@ -133,6 +136,7 @@ const PASTE_MAX_AGE_MS = pasteMaxAgeHours * 60 * 60 * 1000;
 const cleanupIntervalHours = Number(process.env.CLEANUP_INTERVAL_HOURS) || 1;
 const CLEANUP_INTERVAL_MS = cleanupIntervalHours * 60 * 60 * 1000;
 
+// Removes paste files older than the configured retention window.
 async function cleanupExpiredPastes() {
     let deleted = 0;
     try {
@@ -155,6 +159,7 @@ async function cleanupExpiredPastes() {
     }
 }
 
+// Initializes storage, starts HTTP server, and schedules periodic cleanup.
 async function startServer() {
     try {
         await fs.mkdir(storageDir, { recursive: true });
@@ -166,7 +171,7 @@ async function startServer() {
             console.log(`Using local storage at ${storageDir}`);
             console.log(`Max request body size is ${bodySizeLimit}`);
             console.log(`Paste retention: ${pasteMaxAgeHours} hour(s), cleanup interval: ${cleanupIntervalHours} hour(s)`);
-            console.log('Available endpoints: GET /health, GET /api/health, PUT /api/upload, GET /api/download?uuid=<id>');
+            console.log('Available endpoints: GET /health, PUT /api/upload, GET /api/download?uuid=<id>');
         });
 
         // Run once at startup to catch anything that expired while the container was down
@@ -178,6 +183,7 @@ async function startServer() {
     }
 }
 
+// Exits cleanly on Ctrl+C in local development.
 process.on('SIGINT', () => {
     process.exit();
 });

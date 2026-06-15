@@ -1,6 +1,7 @@
 // Footer with project link and retention notice.
 import { useEffect } from 'react';
 
+// Footer component with repository link and retention message.
 const Footer = () => {
   useEffect(() => {
     const repoUrl = import.meta.env.VITE_REPO_URL || '/';

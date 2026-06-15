@@ -2,15 +2,17 @@
 import { useState, useCallback } from 'react';
 import { apiUrl } from './api';
 
-// Upload function that creates a text box for user input then uploads that content to the API.
+// Upload page component with textarea state and submit behavior.
 const Upload = () => {
     const [content, setContent] = useState('');
     const [isUploading, setIsUploading] = useState(false);
 
+    // Keeps textarea state synchronized with user input.
     const handleChange = useCallback((e) => {
         setContent(e.target.value);
     }, []);
 
+    // Sends paste content to the API and redirects to the returned URL.
     const upload = useCallback(async (e) => {
         e.preventDefault();
         // Check if the content is empty
