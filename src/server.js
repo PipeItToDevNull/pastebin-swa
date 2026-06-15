@@ -178,14 +178,10 @@ async function startServer() {
         await cleanupExpiredPastes();
         setInterval(cleanupExpiredPastes, CLEANUP_INTERVAL_MS);
     } catch (err) {
-        console.error(`Failed to initialize local storage: ${err.message}`);
-        process.exit(1);
+        throw new Error(`Failed to initialize local storage: ${err.message}`);
     }
 }
 
-// Exits cleanly on Ctrl+C in local development.
-process.on('SIGINT', () => {
-    process.exit();
+startServer().catch((err) => {
+    throw err;
 });
-
-startServer();

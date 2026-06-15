@@ -8,7 +8,6 @@ import { apiUrl } from './api';
 const PastePage = () => {
     const { uuid } = useParams();
     const [content, setContent] = useState('');
-    const [contentType, setContentType] = useState('');
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -16,14 +15,13 @@ const PastePage = () => {
         const fetchPasteContent = async () => {
             try {
                 const response = await fetch(apiUrl(`/download?uuid=${uuid}`));
-                const contentType = response.headers.get("content-type");
-                setContentType(contentType);
+                const responseContentType = response.headers.get('content-type');
 
                 if (response.ok) {
                     const text = await response.text();
-                    if (contentType === 'text/html; charset=utf-8') {
+                    if (responseContentType === 'text/html; charset=utf-8') {
                         setContent(text);
-                    } else if (contentType === 'text/markdown; charset=utf-8') {
+                    } else if (responseContentType === 'text/markdown; charset=utf-8') {
                         setContent(marked.parse(text));
                     } else {
                         setContent(text);
@@ -32,8 +30,8 @@ const PastePage = () => {
                     const errorMessage = await response.text();
                     setError(`${response.status}: ${errorMessage}`);
                 }
-            } catch (error) {
-                setError(`Fetch Error: ${error.message}`);
+            } catch (err) {
+                setError(`Fetch Error: ${err.message}`);
             }
         };
 
