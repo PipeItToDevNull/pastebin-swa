@@ -1,4 +1,13 @@
-// Express server that provides paste APIs and serves the built frontend.
+/*
+ * Main server for the container.
+ *
+ * This file does five things:
+ * - Reads runtime env config.
+ * - Handles paste APIs (/api/upload, /api/download, /health).
+ * - Serves the built frontend and injects window.__CONFIG__.
+ * - Cleans up expired pastes on a schedule.
+ * - Starts and stops the process cleanly.
+ */
 const crypto = require('crypto');
 const express = require('express');
 const fs = require('fs/promises');
