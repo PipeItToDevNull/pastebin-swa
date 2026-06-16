@@ -11,6 +11,7 @@ const REPO_URL = window.__CONFIG__?.REPO_URL || '/';
 const maxAgeHours = Number(window.__CONFIG__?.PASTE_MAX_AGE_HOURS) || 24;
 const retentionLabel = maxAgeHours === 1 ? '1 hour' : `${maxAgeHours} hours`;
 
+/** App shell with routing between upload and paste views. */
 const App = () => {
   useEffect(() => {
     document.title = SITE_NAME;
