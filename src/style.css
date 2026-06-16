@@ -27,12 +27,13 @@ body {
     color: var(--w3);
     font-family: verdana, arial;
 }
+
 #container {
     margin-left: 10%;
     margin-right: 10%;
 }
 
-.siteLink {
+.siteLink.siteLink {
   text-decoration: none;
   color: inherit;
 }
