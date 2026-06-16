@@ -41,7 +41,6 @@ const PastePage = () => {
     if (error) {
         return (
             <div id="errorBlock">
-                <p>{error}</p>
                 <img className="errorImage" src="/404.png" alt="404 Error" />
             </div>
         );
